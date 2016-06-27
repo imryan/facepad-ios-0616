@@ -13,7 +13,7 @@
 #import "FISUser.h"
 #import "FISNewsFeedTableViewController.h"
 #import "FISTextTableViewCell.h"
-#import "FISCoverImageTableViewCell.h"
+//#import "FISCoverImageTableViewCell.h"
 #import "FISImageTableViewCell.h"
 #import "FISTextPost.h"
 #import "FISImagePost.h"
@@ -66,20 +66,26 @@ describe(@"FISNewsFeedTableViewController", ^{
     
     describe(@"FISCoverImageTableViewCell", ^{
         
-        __block FISCoverImageTableViewCell *coverCell;
+        //__block FISCoverImageTableViewCell *coverCell;
+        __block UIImageView *coverImageView;
         
         beforeAll(^{
-            NSIndexPath *ip = [NSIndexPath indexPathForRow:0 inSection:0];
-            coverCell = (FISCoverImageTableViewCell*)[fisTVC.tableView cellForRowAtIndexPath:ip];
+//            NSIndexPath *ip = [NSIndexPath indexPathForRow:0 inSection:0];
+//            coverCell = (FISCoverImageTableViewCell*)[fisTVC.tableView cellForRowAtIndexPath:ip];
+            coverImageView = (UIImageView *)[fisTVC.tableView tableHeaderView];
         });
-        
-        it(@"is the first cell", ^{
-            expect(coverCell).to.beKindOf([FISCoverImageTableViewCell class]);
-        });
-        
+//        
+//        it(@"is an image view", ^{
+//            expect(tableHeaderView).to.beKindOf([UIImageView class]);
+//        });
+//        
+//        it(@"is the first cell", ^{
+//            expect(coverCell).to.beKindOf([FISCoverImageTableViewCell class]);
+//        });
+//
         it(@"has a UIImageView property named cover", ^{
-            expect(coverCell.cover).to.beKindOf([UIImageView class]);
-            expect(coverCell.cover.image).to.equal(testUser.cover);
+            expect(coverImageView).to.beKindOf([UIImageView class]);
+            expect(coverImageView.image).to.equal(testUser.cover);
         });
     });
     
@@ -89,9 +95,9 @@ describe(@"FISNewsFeedTableViewController", ^{
         __block FISTextPost *thisTextPost;
         
         beforeAll(^{
-            NSIndexPath *ip = [NSIndexPath indexPathForRow:1 inSection:0];
+            NSIndexPath *ip = [NSIndexPath indexPathForRow:0 inSection:0];
             textCell = (FISTextTableViewCell*)[fisTVC.tableView cellForRowAtIndexPath:ip];
-            thisTextPost = testUser.posts[ip.row-1];
+            thisTextPost = testUser.posts[ip.row];
         });
         
         it(@"is the next cell", ^{
@@ -99,12 +105,12 @@ describe(@"FISNewsFeedTableViewController", ^{
         });
         
         it(@"has a profile picture and username", ^{
-            expect(textCell.profilePic.image).to.equal(testUser.profilePic);
-            expect(textCell.profileUsername.text).to.equal(testUser.username);
+            expect(textCell.userProfileImageView.image).to.equal(testUser.profilePic);
+            expect(textCell.usernameLabel.text).to.equal(testUser.username);
         });
         
         it(@"contains the appropriate text content", ^{
-            expect(textCell.postContent.text).to.equal(thisTextPost.textContent);
+            expect(textCell.postTextView.text).to.equal(thisTextPost.textContent);
         });
     });
     
@@ -114,8 +120,8 @@ describe(@"FISNewsFeedTableViewController", ^{
         __block FISImagePost *thisImagePost;
         
         beforeAll(^{
-            NSIndexPath *ip = [NSIndexPath indexPathForRow:2 inSection:0];
-            thisImagePost = testUser.posts[ip.row-1];
+            NSIndexPath *ip = [NSIndexPath indexPathForRow:1 inSection:0];
+            thisImagePost = testUser.posts[ip.row];
             imageCell = (FISImageTableViewCell*)[fisTVC.tableView cellForRowAtIndexPath:ip];
         });
         
@@ -124,12 +130,12 @@ describe(@"FISNewsFeedTableViewController", ^{
         });
         
         it(@"has a profile picture and username", ^{
-            expect(imageCell.profilePic.image).to.equal(testUser.profilePic);
-            expect(imageCell.profileUsername.text).to.equal(testUser.username);
+            expect(imageCell.userProfileImageView.image).to.equal(testUser.profilePic);
+            expect(imageCell.usernameLabel.text).to.equal(testUser.username);
         });
         
         it(@"contains the appropriate image content", ^{
-            expect(imageCell.contentImage.image).to.equal(thisImagePost.imageContent);
+            expect(imageCell.postImageView.image).to.equal(thisImagePost.imageContent);
             
         });
     });
